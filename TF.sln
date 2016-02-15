@@ -27,6 +27,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{81F2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TF.AuthorizationMicroservice", "src\Microservices\TF.AuthorizationMicroservice\TF.AuthorizationMicroservice.csproj", "{62AF66F7-1702-4008-9F05-DA8EDE9EF29E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E85BD645-8959-4198-8113-925031E682F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessCategoryTreeServiceTest", "src\Tests\BusinessCategoryTreeServiceTest\BusinessCategoryTreeServiceTest.csproj", "{EEC6EAF1-ED5C-47FB-9809-DFE3A6B4BC25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +65,10 @@ Global
 		{62AF66F7-1702-4008-9F05-DA8EDE9EF29E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62AF66F7-1702-4008-9F05-DA8EDE9EF29E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62AF66F7-1702-4008-9F05-DA8EDE9EF29E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEC6EAF1-ED5C-47FB-9809-DFE3A6B4BC25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEC6EAF1-ED5C-47FB-9809-DFE3A6B4BC25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEC6EAF1-ED5C-47FB-9809-DFE3A6B4BC25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEC6EAF1-ED5C-47FB-9809-DFE3A6B4BC25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,5 +81,6 @@ Global
 		{8049AB21-406E-423B-AFE2-9282B2FAE4C5} = {3F3A2EA0-5021-442B-96C5-004037BB2CEC}
 		{24922083-1826-480D-B73A-1BFA9D463560} = {BD8D6E7C-6911-417A-B435-A669A57C7F8F}
 		{62AF66F7-1702-4008-9F05-DA8EDE9EF29E} = {BD8D6E7C-6911-417A-B435-A669A57C7F8F}
+		{EEC6EAF1-ED5C-47FB-9809-DFE3A6B4BC25} = {E85BD645-8959-4198-8113-925031E682F6}
 	EndGlobalSection
 EndGlobal
