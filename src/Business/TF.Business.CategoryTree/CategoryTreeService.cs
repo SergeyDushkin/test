@@ -161,9 +161,6 @@ namespace TF.Business
             }
         }
 
-        public void AddChild(Guid productId, Guid childId) { throw new NotImplementedException(); }
-        public void DeleteChild(Guid productId, Guid childId) { throw new NotImplementedException(); }
-
         public CategoryTree GetById(Guid id)
         {
             if (id == Guid.Empty)
