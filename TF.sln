@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E85BD645
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessCategoryTreeServiceTest", "src\Tests\BusinessCategoryTreeServiceTest\BusinessCategoryTreeServiceTest.csproj", "{EEC6EAF1-ED5C-47FB-9809-DFE3A6B4BC25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TF.CategoryTreeMicroservice", "src\Microservices\TF.CategoryTreeMicroservice\TF.CategoryTreeMicroservice.csproj", "{62F7740B-C921-4D56-AD81-8AEDA981E47F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{EEC6EAF1-ED5C-47FB-9809-DFE3A6B4BC25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEC6EAF1-ED5C-47FB-9809-DFE3A6B4BC25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEC6EAF1-ED5C-47FB-9809-DFE3A6B4BC25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62F7740B-C921-4D56-AD81-8AEDA981E47F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62F7740B-C921-4D56-AD81-8AEDA981E47F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62F7740B-C921-4D56-AD81-8AEDA981E47F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62F7740B-C921-4D56-AD81-8AEDA981E47F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,5 +88,6 @@ Global
 		{24922083-1826-480D-B73A-1BFA9D463560} = {BD8D6E7C-6911-417A-B435-A669A57C7F8F}
 		{62AF66F7-1702-4008-9F05-DA8EDE9EF29E} = {BD8D6E7C-6911-417A-B435-A669A57C7F8F}
 		{EEC6EAF1-ED5C-47FB-9809-DFE3A6B4BC25} = {E85BD645-8959-4198-8113-925031E682F6}
+		{62F7740B-C921-4D56-AD81-8AEDA981E47F} = {BD8D6E7C-6911-417A-B435-A669A57C7F8F}
 	EndGlobalSection
 EndGlobal

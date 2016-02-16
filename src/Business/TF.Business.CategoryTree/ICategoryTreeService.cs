@@ -11,6 +11,7 @@ namespace TF.Business
         void Update(CategoryTree category);
         void Delete(Guid id);
 
+        IEnumerable<CategoryTree> GetAll();
         CategoryTree GetById(Guid id);   
     }
 }
