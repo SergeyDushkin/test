@@ -37,6 +37,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessCategoryTreeMicrose
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessWmsPriceServiceTest", "src\Tests\BusinessWmsPriceServiceTest\BusinessWmsPriceServiceTest.csproj", "{028E7C48-1743-4079-AB81-4C2107CE2C9F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TF.PriceMicroservice", "src\Microservices\TF.PriceMicroservice\TF.PriceMicroservice.csproj", "{2E0C726D-8188-42C3-B83D-45D03FDD29E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessWmsPriceMicroserviceTest", "src\Tests\BusinessWmsPriceMicroserviceTest\BusinessWmsPriceMicroserviceTest.csproj", "{B9A17C7D-DF5A-4552-806A-420028D417A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +91,14 @@ Global
 		{028E7C48-1743-4079-AB81-4C2107CE2C9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{028E7C48-1743-4079-AB81-4C2107CE2C9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{028E7C48-1743-4079-AB81-4C2107CE2C9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E0C726D-8188-42C3-B83D-45D03FDD29E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E0C726D-8188-42C3-B83D-45D03FDD29E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E0C726D-8188-42C3-B83D-45D03FDD29E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E0C726D-8188-42C3-B83D-45D03FDD29E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9A17C7D-DF5A-4552-806A-420028D417A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9A17C7D-DF5A-4552-806A-420028D417A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9A17C7D-DF5A-4552-806A-420028D417A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9A17C7D-DF5A-4552-806A-420028D417A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,5 +115,7 @@ Global
 		{62F7740B-C921-4D56-AD81-8AEDA981E47F} = {BD8D6E7C-6911-417A-B435-A669A57C7F8F}
 		{FAF9847B-9B90-4ABC-8A0F-5826934783D5} = {E85BD645-8959-4198-8113-925031E682F6}
 		{028E7C48-1743-4079-AB81-4C2107CE2C9F} = {E85BD645-8959-4198-8113-925031E682F6}
+		{2E0C726D-8188-42C3-B83D-45D03FDD29E2} = {BD8D6E7C-6911-417A-B435-A669A57C7F8F}
+		{B9A17C7D-DF5A-4552-806A-420028D417A1} = {E85BD645-8959-4198-8113-925031E682F6}
 	EndGlobalSection
 EndGlobal
