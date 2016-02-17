@@ -4,6 +4,8 @@ using Microsoft.Owin;
 using Owin;
 using System.Web.Http;
 using Microsoft.Owin.Hosting;
+using System.Net.Http;
+using System.Web.Http.Routing;
 
 namespace TF.CategoryTreeMicroservice
 {
@@ -15,12 +17,21 @@ namespace TF.CategoryTreeMicroservice
         {
             HttpConfiguration config = new HttpConfiguration();
 
+            config.MapHttpAttributeRoutes();
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            /*
+            config.Routes.MapHttpRoute(
+                name: "DefaultNestedApi",
+                routeTemplate: "api/{controller}/{id}/{actions}/",
+                defaults: new { id = RouteParameter.Optional }
+            );
+            */
             app.UseWebApi(config);
         }
 

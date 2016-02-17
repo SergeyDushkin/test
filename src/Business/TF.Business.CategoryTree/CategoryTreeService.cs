@@ -200,6 +200,36 @@ namespace TF.Business
             }
         }
 
+        public IEnumerable<CategoryTree> GetByParentId(Guid id)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "select * from [BUSINESS.CATEGORY_TREE] where [PARENT_GUID] = @PARENT_GUID";
+                    command.Parameters.AddWithValue("@PARENT_GUID", id);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            yield return new CategoryTree
+                            {
+                                Id = reader.GetGuid(reader.GetOrdinal("GUID_RECORD")),
+                                Key = reader.GetString(reader.GetOrdinal("KEY")),
+                                Name = reader.GetString(reader.GetOrdinal("NAME")),
+                                ParentId = reader.IsDBNull(reader.GetOrdinal("PARENT_GUID"))
+                                    ? default(Guid?)
+                                    : reader.GetGuid(reader.GetOrdinal("PARENT_GUID"))
+                            };
+                        }
+                    }
+                }
+            }
+        }   
+
         public IEnumerable<CategoryTree> GetAll()
         {
             using (var connection = new SqlConnection(_connectionString))
