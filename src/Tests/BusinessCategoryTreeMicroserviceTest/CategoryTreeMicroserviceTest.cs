@@ -70,7 +70,7 @@ namespace BusinessCategoryTreeMicroserviceTest
         }
 
         [TestMethod]
-        public async Task PostTest()
+        public void PostTest()
         {
             using (var client = new HttpClient())
             {
@@ -89,26 +89,33 @@ namespace BusinessCategoryTreeMicroserviceTest
                     Name = "Name" + id.ToString()
                 };
 
-                response = await client.PostAsJsonAsync(_controller, category);
+                response = client.PostAsJsonAsync(_controller, category).Result;
 
                 Assert.IsTrue(response.IsSuccessStatusCode, "HTTP POST fail");
             }
         }
 
         [TestMethod]
-        public async Task PerfomanceCrudTest()
+        public async Task PerfomanceParallelCreateTest()
         {
-            /// Нормально не работает
-            System.Linq.Enumerable.Range(0, 10000).ToList().ForEach(async r =>
+            System.Diagnostics.Debug.Print("Start " + DateTime.Now.ToShortTimeString());
+
+            Parallel.For(0, 1000, (i) =>
             {
-                await PostTest();
+                PostTest();
             });
 
-            /*
-            Parallel.For(0, 10000, async (i) =>
-            {
-                await PostTest();
-            });*/
+            System.Diagnostics.Debug.Print("End " + DateTime.Now.ToShortTimeString());
+        }
+
+        [TestMethod]
+        public async Task PerfomanceCreateTest()
+        {
+            System.Diagnostics.Debug.Print("Start " + DateTime.Now.ToShortTimeString());
+
+            System.Linq.Enumerable.Range(0, 1000).ToList().ForEach(r => PostTest());
+
+            System.Diagnostics.Debug.Print("End " + DateTime.Now.ToShortTimeString());
         }
 
     }
