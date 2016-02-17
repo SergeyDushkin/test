@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace TF.CategoryTreeMicroservice
@@ -55,23 +50,4 @@ namespace TF.CategoryTreeMicroservice
             return Ok();
         }
     }
-
-    /*
-    [RoutePrefix("categorytree/{id}")]
-    public class ChildCategoryTreeController : ApiController
-    {
-        readonly TF.Business.ICategoryTreeService _service;
-
-        public ChildCategoryTreeController()
-        {
-            _service = new TF.Business.CategoryTreeService();
-        }
-
-        [HttpGet]
-        [Route("childs")]
-        public IHttpActionResult GetByParentId(Guid id)
-        {
-            return Ok(_service.GetByParentId(id));
-        }
-    }*/
 }

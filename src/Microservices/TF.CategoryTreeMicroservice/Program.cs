@@ -17,9 +17,9 @@ namespace TF.CategoryTreeMicroservice
 
                 x.RunAsLocalSystem();
 
-                x.SetDescription("TechFactory ProductMicroservice WebAPI selfhosting Windows Service");
-                x.SetDisplayName("TechFactory ProductMicroservice");
-                x.SetServiceName("TechFactory.ProductMicroservice");
+                x.SetDescription("TechFactory CategoryTreeMicroservice WebAPI selfhosting Windows Service");
+                x.SetDisplayName("TechFactory CategoryTreeMicroservice");
+                x.SetServiceName("TechFactory.CategoryTreeMicroservice");
             });
         }
     }
