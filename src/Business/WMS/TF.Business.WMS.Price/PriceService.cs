@@ -243,7 +243,7 @@ namespace TF.Business.WMS
             {
                 Id = reader.GetGuid(reader.GetOrdinal("GUID_RECORD")),
                 ProductId = reader.GetGuid(reader.GetOrdinal("ITEM_GUID")),
-                ProductPrice = reader.GetFloat(reader.GetOrdinal("PRICE")),
+                ProductPrice = reader.GetDouble(reader.GetOrdinal("PRICE")),
             };
         }
 
