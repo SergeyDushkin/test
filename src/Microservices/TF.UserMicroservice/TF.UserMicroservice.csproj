@@ -94,9 +94,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\System\Security\TF.System.Security.USER\TF.System.Security.USER.csproj">
+    <ProjectReference Include="..\..\System\Security\TF.System.Security.Users\TF.SystemSecurity.User.csproj">
       <Project>{504116e4-dea9-483c-9830-e9f53dbe0a87}</Project>
-      <Name>TF.System.Security.USER</Name>
+      <Name>TF.SystemSecurity.User</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
