@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace TF.CategoryTreeMicroservice
@@ -29,9 +30,9 @@ namespace TF.CategoryTreeMicroservice
             return Ok(_service.GetByParentId(id));
         }
 
-        public IHttpActionResult Post([FromBody]TF.Business.CategoryTree value)
+        public async Task<IHttpActionResult> Post([FromBody]TF.Business.CategoryTree value)
         {
-            _service.Create(value);
+            await _service.CreateAsync(value);
 
             return Ok();
         }

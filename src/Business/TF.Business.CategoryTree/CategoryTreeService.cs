@@ -11,7 +11,7 @@ namespace TF.Business
     {
         private readonly string _connectionString;
 
-        public void Create(CategoryTree category)
+        public async Task CreateAsync(CategoryTree category)
         {
             if (category == null)
                 throw new ArgumentNullException("category");
@@ -33,7 +33,7 @@ namespace TF.Business
                 {
                     /// Check id
                     command.CommandText = string.Format("select 1 from [BUSINESS.CATEGORY_TREE] where [GUID_RECORD] = '{0}'", category.Id);
-                    using (var reader = command.ExecuteReader())
+                    using (var reader = await command.ExecuteReaderAsync())
                     {
                         if (reader.HasRows)
                             throw new Exception("Record already exists");
@@ -41,7 +41,7 @@ namespace TF.Business
 
                     /// Check key
                     command.CommandText = string.Format("select 1 from [BUSINESS.CATEGORY_TREE] where [KEY] = '{0}'", category.Key);
-                    using (var reader = command.ExecuteReader())
+                    using (var reader = await command.ExecuteReaderAsync())
                     {
                         if (reader.HasRows)
                             throw new Exception("Record already exists");
@@ -51,7 +51,7 @@ namespace TF.Business
                     if (category.ParentId.HasValue && category.ParentId.Value != Guid.Empty)
                     {
                         command.CommandText = string.Format("select 1 from [BUSINESS.CATEGORY_TREE] where [GUID_RECORD] = '{0}'", category.ParentId);
-                        using (var reader = command.ExecuteReader())
+                        using (var reader = await command.ExecuteReaderAsync())
                         {
                             if (!reader.HasRows)
                                 throw new Exception("Record does't exists");
@@ -76,11 +76,15 @@ namespace TF.Business
                     command.Parameters.AddWithValue("@HIDDEN", 0);
                     command.Parameters.AddWithValue("@DELETED", 0);
 
-                    command.ExecuteNonQuery();
+                    await command.ExecuteNonQueryAsync();
                 }
             }
         }
 
+        public void Create(CategoryTree category)
+        {
+            CreateAsync(category).Wait();
+        }
 
         public void Update(CategoryTree category)
         {
@@ -337,7 +341,15 @@ namespace TF.Business
 		            [HIDDEN] [bit] NOT NULL,
 		            [DELETED] [bit] NOT NULL
 	            ) ON [PRIMARY]
-            end";
+            end
+
+            IF NOT EXISTS(SELECT * FROM sys.indexes WHERE Name = 'IDX_BCT_ID') BEGIN
+                CREATE INDEX IDX_BCT_ID ON [BUSINESS.CATEGORY_TREE] ([GUID_RECORD])
+            END
+  
+            IF NOT EXISTS(SELECT * FROM sys.indexes WHERE Name = 'IDX_BCT_KEY') BEGIN
+                CREATE INDEX IDX_BCT_KEY ON [BUSINESS.CATEGORY_TREE] ([KEY])
+            END";
 
             using (var connection = new SqlConnection(connectionString))
             {

@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace BusinessCategoryTreeMicroserviceTest
 {
@@ -91,6 +93,8 @@ namespace BusinessCategoryTreeMicroserviceTest
 
                 response = client.PostAsJsonAsync(_controller, category).Result;
 
+                System.Diagnostics.Debug.Print("PostTest " + DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt") + " " + response.IsSuccessStatusCode);
+
                 Assert.IsTrue(response.IsSuccessStatusCode, "HTTP POST fail");
             }
         }
@@ -100,11 +104,27 @@ namespace BusinessCategoryTreeMicroserviceTest
         {
             System.Diagnostics.Debug.Print("Start " + DateTime.Now.ToShortTimeString());
 
+            Stopwatch stopwatch = new Stopwatch();
+            var watch = new List<TimeSpan>();
+
             Parallel.For(0, 1000, (i) =>
             {
+                stopwatch.Start();
+
                 PostTest();
+
+                stopwatch.Stop();
+                watch.Add(stopwatch.Elapsed);
+                stopwatch.Reset();
             });
 
+
+            var count = watch.Count();
+            var avg = watch.Average(r => r.Milliseconds);
+            var min = watch.Min(r => r.Milliseconds);
+            var max = watch.Max(r => r.Milliseconds);
+
+            System.Diagnostics.Debug.Print("avg: {0}, min: {1}, max: {2}, count: {3}", avg, min, max, count);
             System.Diagnostics.Debug.Print("End " + DateTime.Now.ToShortTimeString());
         }
 
@@ -113,8 +133,23 @@ namespace BusinessCategoryTreeMicroserviceTest
         {
             System.Diagnostics.Debug.Print("Start " + DateTime.Now.ToShortTimeString());
 
-            System.Linq.Enumerable.Range(0, 1000).ToList().ForEach(r => PostTest());
+            Stopwatch stopwatch = new Stopwatch();
+            var watch = new List<TimeSpan>();
 
+            System.Linq.Enumerable.Range(0, 1000).ToList().ForEach(r => {
+                stopwatch.Start();
+                PostTest();
+
+                stopwatch.Stop();
+                watch.Add(stopwatch.Elapsed);
+                stopwatch.Reset();
+            });
+
+            var avg = watch.Average(r => r.Milliseconds);
+            var min = watch.Min(r => r.Milliseconds);
+            var max = watch.Max(r => r.Milliseconds);
+
+            System.Diagnostics.Debug.Print("avg: {0}, min: {1}, max: {2} ", avg, min, max);
             System.Diagnostics.Debug.Print("End " + DateTime.Now.ToShortTimeString());
         }
 
