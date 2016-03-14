@@ -5,6 +5,9 @@ using Owin;
 using System;
 using System.Web.Http;
 
+using System.Web.Http.OData.Builder;
+using System.Web.Http.OData.Extensions;
+
 namespace TF.AggregateProductMicroservice
 {
     public class Startup
@@ -17,6 +20,9 @@ namespace TF.AggregateProductMicroservice
 
             /// Регистрация зависимостей
             Startup.RegisterProductDependency(config);
+
+            /// 
+            Startup.RegisterOdataRoutes(config);
 
             /// Регистрация маршрутов
             config.Routes.MapHttpRoute(
@@ -34,7 +40,17 @@ namespace TF.AggregateProductMicroservice
             var container = new UnityContainer();
 
             container.RegisterType<IAggregateProductProductRepository, AggregateProductRepository>(new HierarchicalLifetimeManager());
-            container.RegisterType<ILogger, Logger>(new HierarchicalLifetimeManager());
+            container.RegisterType<ILogger, Logger>(new InjectionFactory(x => LogManager.GetCurrentClassLogger())); 
+
+            config.DependencyResolver = new UnityResolver(container);
+        }
+
+        private static void RegisterOdataRoutes(HttpConfiguration config)
+        {
+            ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
+            builder.EntitySet<AggregateProduct>("Products");
+
+            config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
         }
 
         public void Start(string baseAddress)

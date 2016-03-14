@@ -7,5 +7,6 @@ namespace TF.AggregateProductMicroservice
 {
     public interface IAggregateProductProductRepository
     {
+        IEnumerable<AggregateProduct> Get();
     }
 }
