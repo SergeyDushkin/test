@@ -1,15 +1,10 @@
 ﻿using Microsoft.Data.OData;
 using NLog;
-using System.Collections;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
-using System.Collections.Generic;
 using TF.Data;
 
 namespace TF.AggregateProductMicroservice.Controllers
@@ -21,7 +16,6 @@ namespace TF.AggregateProductMicroservice.Controllers
         private readonly ICategoryTreeRepository repository;
         private readonly IProductsCategoryRepository productsCategoryRepository;
         private readonly ILogger logger;
-        private readonly System.Diagnostics.StackTrace stackTrace;
 
         public CategoryTreesController(
             ICategoryTreeRepository repository,
@@ -32,15 +26,13 @@ namespace TF.AggregateProductMicroservice.Controllers
             this.productsCategoryRepository = productsCategoryRepository;
             this.logger = logger;
 
-            this.stackTrace = new System.Diagnostics.StackTrace();
-
             this.logger.Trace("Call CategoryTreesController");
         }
 
-        [Queryable]
+        [EnableQuery]
         public async Task<IHttpActionResult> GetCategoryTrees(ODataQueryOptions<CategoryTree> queryOptions)
         {
-            this.logger.Trace("Call CategoryTreesController GetCategoryTrees");
+            logger.Trace("Call CategoryTreesController GetCategoryTrees");
 
             try
             {
@@ -52,14 +44,14 @@ namespace TF.AggregateProductMicroservice.Controllers
             }
 
             var orders = (IQueryable<CategoryTree>)queryOptions
-                .ApplyTo(repository.Get().AsQueryable<CategoryTree>());
+                .ApplyTo(repository.Get().AsQueryable());
 
-            return Ok<IQueryable<CategoryTree>>(orders);
+            return Ok(orders);
         }
 
         public async Task<IHttpActionResult> GetCategoryTree([FromODataUri] System.Guid key)
         {
-            this.logger.Trace("Call CategoryTreesController GetCategoryTree");
+            logger.Trace("Call CategoryTreesController GetCategoryTree");
 
             var query = repository
                 .Get()
@@ -70,7 +62,7 @@ namespace TF.AggregateProductMicroservice.Controllers
 
         public async Task<IHttpActionResult> GetProducts([FromODataUri] System.Guid key)
         {
-            this.logger.Trace("Call CategoryTreesController GetProducts");
+            logger.Trace("Call CategoryTreesController GetProducts");
 
             var query = productsCategoryRepository
                 .Get()
@@ -82,7 +74,7 @@ namespace TF.AggregateProductMicroservice.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            this.logger.Trace("End CategoryTreesController");
+            logger.Trace("End CategoryTreesController");
 
             base.Dispose(disposing);
         }

@@ -1,15 +1,11 @@
 ﻿using Microsoft.Data.OData;
 using NLog;
-using System.Collections;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
-using System.Collections.Generic;
 using TF.Data;
 
 namespace TF.AggregateProductMicroservice.Controllers
@@ -28,10 +24,10 @@ namespace TF.AggregateProductMicroservice.Controllers
             this.logger.Trace("Call ProductsController");
         }
 
-        [Queryable]
+        [EnableQuery]
         public async Task<IHttpActionResult> GetProducts(ODataQueryOptions<AggregateProduct> queryOptions)
         {
-            this.logger.Trace("Call ProductsController GetProducts");
+            logger.Trace("Call ProductsController GetProducts");
 
             try
             {
@@ -42,25 +38,16 @@ namespace TF.AggregateProductMicroservice.Controllers
                 return BadRequest(ex.Message);
             }
 
-            var orders = queryOptions.ApplyTo(repository.Get().AsQueryable<AggregateProduct>());
+            var orders = (IQueryable<AggregateProduct>)queryOptions
+                .ApplyTo(repository.Get().AsQueryable());
 
-            //return Ok<PageResult>(new PageResult<AggregateProduct>(orders as IEnumerable<AggregateProduct>, Request.GetNextPageLink(), Request.GetInlineCount()));
-            return Ok<IQueryable<AggregateProduct>>((IQueryable<AggregateProduct>)orders);
+            return Ok(orders);
         }
 
-        [Queryable]
-        public async Task<IHttpActionResult> GetProduct([FromODataUri] System.Guid key, ODataQueryOptions<AggregateProduct> queryOptions)
+        [EnableQuery]
+        public async Task<IHttpActionResult> GetProduct([FromODataUri] System.Guid key)
         {
-            this.logger.Trace("Call ProductsController GetProduct");
-
-            try
-            {
-                queryOptions.Validate(_validationSettings);
-            }
-            catch (ODataException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            logger.Trace("Call ProductsController GetProduct");
 
             // return Ok<Order>(order);
             return StatusCode(HttpStatusCode.NotImplemented);
@@ -68,7 +55,7 @@ namespace TF.AggregateProductMicroservice.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            this.logger.Trace("End ProductsController");
+            logger.Trace("End ProductsController");
 
             base.Dispose(disposing);
         }
