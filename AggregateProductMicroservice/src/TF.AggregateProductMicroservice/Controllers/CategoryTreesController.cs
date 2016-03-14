@@ -13,24 +13,28 @@ using System.Collections.Generic;
 
 namespace TF.AggregateProductMicroservice.Controllers
 {
-    public class ProductsController : ODataController
+    public class CategoryTreesController : ODataController
     {
         private static ODataValidationSettings _validationSettings = new ODataValidationSettings();
-        private readonly IAggregateProductProductRepository repository;
+       
+        private readonly ICategoryTreeRepository repository;
         private readonly ILogger logger;
+        private readonly System.Diagnostics.StackTrace stackTrace;
 
-        public ProductsController(IAggregateProductProductRepository repository, ILogger logger)
+        public CategoryTreesController(ICategoryTreeRepository repository, ILogger logger)
         {
             this.repository = repository;
             this.logger = logger;
 
-            this.logger.Trace("Call ProductsController");
+            this.stackTrace = new System.Diagnostics.StackTrace();
+
+            this.logger.Trace("Call CategoryTreesController");
         }
 
         [Queryable]
-        public async Task<IHttpActionResult> GetProducts(ODataQueryOptions<AggregateProduct> queryOptions)
+        public async Task<IHttpActionResult> GetCategoryTrees(ODataQueryOptions<CategoryTree> queryOptions)
         {
-            this.logger.Trace("Call ProductsController GetProducts");
+            this.logger.Trace("Call CategoryTreesController GetCategoryTrees");
 
             try
             {
@@ -41,16 +45,16 @@ namespace TF.AggregateProductMicroservice.Controllers
                 return BadRequest(ex.Message);
             }
 
-            var orders = queryOptions.ApplyTo(repository.Get().AsQueryable<AggregateProduct>());
+            var orders = (IQueryable<CategoryTree>)queryOptions
+                .ApplyTo(repository.Get().AsQueryable<CategoryTree>());
 
-            //return Ok<PageResult>(new PageResult<AggregateProduct>(orders as IEnumerable<AggregateProduct>, Request.GetNextPageLink(), Request.GetInlineCount()));
-            return Ok<IQueryable<AggregateProduct>>((IQueryable<AggregateProduct>)orders);
+            return Ok<IQueryable<CategoryTree>>(orders);
         }
 
         [Queryable]
-        public async Task<IHttpActionResult> GetProduct([FromODataUri] System.Guid key, ODataQueryOptions<AggregateProduct> queryOptions)
+        public async Task<IHttpActionResult> GetCategoryTree([FromODataUri] System.Guid key, ODataQueryOptions<AggregateProduct> queryOptions)
         {
-            this.logger.Trace("Call ProductsController GetProduct");
+            this.logger.Trace("Call CategoryTreesController GetCategoryTree");
 
             try
             {
@@ -61,13 +65,12 @@ namespace TF.AggregateProductMicroservice.Controllers
                 return BadRequest(ex.Message);
             }
 
-            // return Ok<Order>(order);
             return StatusCode(HttpStatusCode.NotImplemented);
         }
 
         protected override void Dispose(bool disposing)
         {
-            this.logger.Trace("End ProductsController");
+            this.logger.Trace("End CategoryTreesController");
 
             base.Dispose(disposing);
         }

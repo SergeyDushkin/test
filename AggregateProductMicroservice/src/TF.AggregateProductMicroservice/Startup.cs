@@ -40,6 +40,7 @@ namespace TF.AggregateProductMicroservice
             var container = new UnityContainer();
 
             container.RegisterType<IAggregateProductProductRepository, AggregateProductRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<ICategoryTreeRepository, CategoryTreeRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<ILogger, Logger>(new InjectionFactory(x => LogManager.GetCurrentClassLogger())); 
 
             config.DependencyResolver = new UnityResolver(container);
@@ -48,7 +49,9 @@ namespace TF.AggregateProductMicroservice
         private static void RegisterOdataRoutes(HttpConfiguration config)
         {
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
+
             builder.EntitySet<AggregateProduct>("Products");
+            builder.EntitySet<CategoryTree>("CategoryTrees");
 
             config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
         }
