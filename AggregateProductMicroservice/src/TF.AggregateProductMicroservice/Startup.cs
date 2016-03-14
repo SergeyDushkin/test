@@ -7,6 +7,7 @@ using System.Web.Http;
 
 using System.Web.Http.OData.Builder;
 using System.Web.Http.OData.Extensions;
+using TF.Data;
 
 namespace TF.AggregateProductMicroservice
 {
@@ -41,6 +42,7 @@ namespace TF.AggregateProductMicroservice
 
             container.RegisterType<IAggregateProductProductRepository, AggregateProductRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<ICategoryTreeRepository, CategoryTreeRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IProductsCategoryRepository, ProductsCategoryRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<ILogger, Logger>(new InjectionFactory(x => LogManager.GetCurrentClassLogger())); 
 
             config.DependencyResolver = new UnityResolver(container);

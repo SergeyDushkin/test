@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TF.AggregateProductMicroservice
+namespace TF.Data
 {
     public class AggregateProduct
     {

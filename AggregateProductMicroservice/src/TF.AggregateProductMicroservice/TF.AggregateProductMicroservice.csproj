@@ -118,8 +118,11 @@
     <Compile Include="Models\CategoryTree.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Models\AggregateProduct.cs" />
+    <Compile Include="Models\ProductsCategory.cs" />
+    <Compile Include="Repositories\ProductsCategoryRepository.cs" />
     <Compile Include="Repositories\CategoryTreeRepository.cs" />
     <Compile Include="Repositories\AggregateProductRepository.cs" />
+    <Compile Include="Repositories\IProductsCategoryRepository.cs" />
     <Compile Include="Repositories\ICategoryTreeRepository.cs" />
     <Compile Include="Repositories\IAggregateProductProductRepository.cs" />
     <Compile Include="Models\Price.cs" />

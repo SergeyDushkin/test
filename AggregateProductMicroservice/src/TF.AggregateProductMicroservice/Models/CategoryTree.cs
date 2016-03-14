@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TF.AggregateProductMicroservice
+namespace TF.Data
 {
     public class CategoryTree
     {
@@ -9,5 +9,7 @@ namespace TF.AggregateProductMicroservice
         public string Name { get; set; }
 
         public Guid? ParentId { get; set; }
+
+        public AggregateProduct[] Products { get; set; }
     }
 }

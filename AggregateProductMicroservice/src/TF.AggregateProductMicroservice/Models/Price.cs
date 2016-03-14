@@ -1,4 +1,4 @@
-﻿namespace TF.AggregateProductMicroservice
+﻿namespace TF.Data
 {
     public class Price
     {

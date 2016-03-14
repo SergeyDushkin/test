@@ -4,8 +4,8 @@ using TF.Data;
 
 namespace TF.AggregateProductMicroservice
 {
-    public interface ICategoryTreeRepository
+    public interface IProductsCategoryRepository
     {
-        IEnumerable<CategoryTree> Get();
+        IEnumerable<ProductsCategory> Get();
     }
 }
