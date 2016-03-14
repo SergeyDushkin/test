@@ -1,0 +1,42 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices m:DataServiceVersion="3.0" m:MaxDataServiceVersion="3.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+    <Schema Namespace="TF.Data" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <EntityType Name="AggregateProduct">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false" />
+        <Property Name="Type" Type="Edm.String" />
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="Price" Type="TF.Data.Price" />
+      </EntityType>
+      <EntityType Name="CategoryTree">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false" />
+        <Property Name="Key" Type="Edm.String" />
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="ParentId" Type="Edm.Guid" />
+        <NavigationProperty Name="Products" Relationship="TF.Data.TF_Data_CategoryTree_Products_TF_Data_AggregateProduct_ProductsPartner" ToRole="Products" FromRole="ProductsPartner" />
+      </EntityType>
+      <ComplexType Name="Price">
+        <Property Name="ProductPrice" Type="Edm.Double" Nullable="false" />
+      </ComplexType>
+      <Association Name="TF_Data_CategoryTree_Products_TF_Data_AggregateProduct_ProductsPartner">
+        <End Type="TF.Data.AggregateProduct" Role="Products" Multiplicity="*" />
+        <End Type="TF.Data.CategoryTree" Role="ProductsPartner" Multiplicity="0..1" />
+      </Association>
+    </Schema>
+    <Schema Namespace="Default" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <EntityContainer Name="Container" m:IsDefaultEntityContainer="true">
+        <EntitySet Name="Products" EntityType="TF.Data.AggregateProduct" />
+        <EntitySet Name="CategoryTrees" EntityType="TF.Data.CategoryTree" />
+        <AssociationSet Name="TF_Data_CategoryTree_Products_TF_Data_AggregateProduct_ProductsPartnerSet" Association="TF.Data.TF_Data_CategoryTree_Products_TF_Data_AggregateProduct_ProductsPartner">
+          <End Role="ProductsPartner" EntitySet="CategoryTrees" />
+          <End Role="Products" EntitySet="Products" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
