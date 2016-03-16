@@ -1,47 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using TF.Data;
 
 namespace TF.AggregateProductMicroservice
 {
     public class CategoryTreeRepository : ICategoryTreeRepository
     {
-        private readonly IEnumerable<CategoryTree> _data;
+        private readonly string _uri;
+        private readonly string _controller;
 
-        public CategoryTreeRepository()
+        public CategoryTreeRepository(string uri)
         {
-            _data = new[] { 
-                new CategoryTree{
-                    Id = Guid.Empty,
-                    Key = "MENU",
-                    Name = "MENU"
-                }, 
-                new CategoryTree{
-                    Id = new Guid("be2ebf01-4846-498f-92c5-33e8a3882a4d"),
-                    Key = "FOOD",
-                    Name = "FOOD",
-                    ParentId = Guid.Empty
-                }, 
-                new CategoryTree{
-                    Id = new Guid("940f2a24-7461-41a3-bb3b-7c8b1f6f235f"),
-                    Key = "DRINKS",
-                    Name = "DRINKS",
-                    ParentId = Guid.Empty
-                }, 
-                new CategoryTree{
-                    Id = new Guid("248f532f-4766-427e-97e9-5dc3a8249fed"),
-                    Key = "SNACKS",
-                    Name = "SNACKS",
-                    ParentId = Guid.Empty
-                }
-            };
+            _uri = uri;
+            _controller = "api/categorytree/";
         }
 
-        public IEnumerable<CategoryTree> Get()
+        public async Task<IEnumerable<CategoryTree>> All()
         {
-            return _data;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(_uri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync(_controller);
+
+                return await response.Content.ReadAsAsync<IEnumerable<CategoryTree>>();
+            }
+        }
+
+        public async Task<CategoryTree> Get(Guid id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(_uri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync(_controller + id.ToString());
+
+                return await response.Content.ReadAsAsync<CategoryTree>();
+            }
+        }
+
+        public async Task<IEnumerable<CategoryTree>> GetByParentId(Guid id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(_uri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync(_controller + id.ToString() + "/" + "childs");
+
+                return await response.Content.ReadAsAsync<IEnumerable<CategoryTree>>();
+            }
         }
     }
 }

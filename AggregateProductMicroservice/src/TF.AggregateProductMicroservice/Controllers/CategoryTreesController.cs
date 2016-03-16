@@ -43,19 +43,19 @@ namespace TF.AggregateProductMicroservice.Controllers
                 return BadRequest(ex.Message);
             }
 
-            var orders = (IQueryable<CategoryTree>)queryOptions
-                .ApplyTo(repository.Get().AsQueryable());
+            var data = await repository.All();
 
-            return Ok(orders);
+            var query = (IQueryable<CategoryTree>)queryOptions
+                .ApplyTo(data.AsQueryable());
+
+            return Ok(query);
         }
 
         public async Task<IHttpActionResult> GetCategoryTree([FromODataUri] System.Guid key)
         {
             logger.Trace("Call CategoryTreesController GetCategoryTree");
 
-            var query = repository
-                .Get()
-                .SingleOrDefault(r => r.Id == key);
+            var query = await repository.Get(key);
 
             return Ok(query);
         }
@@ -68,6 +68,27 @@ namespace TF.AggregateProductMicroservice.Controllers
                 .Get()
                 .SingleOrDefault(r => r.CategoryId == key)
                 .Products;
+
+            return Ok(query);
+        }
+
+        public async Task<IHttpActionResult> GetChilds([FromODataUri] System.Guid key, ODataQueryOptions<CategoryTree> queryOptions)
+        {
+            logger.Trace("Call CategoryTreesController GetChilds");
+
+            try
+            {
+                queryOptions.Validate(_validationSettings);
+            }
+            catch (ODataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            var data = await repository.GetByParentId(key);
+
+            var query = (IQueryable<CategoryTree>)queryOptions
+                .ApplyTo(data.AsQueryable());
 
             return Ok(query);
         }

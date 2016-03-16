@@ -11,5 +11,6 @@ namespace TF.Data
         public Guid? ParentId { get; set; }
 
         public AggregateProduct[] Products { get; set; }
+        public CategoryTree[] Childs { get; set; }
     }
 }

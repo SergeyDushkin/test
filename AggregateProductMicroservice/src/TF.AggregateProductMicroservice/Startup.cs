@@ -1,10 +1,11 @@
-﻿using Microsoft.Owin.Hosting;
+﻿using Microsoft.Owin;
+using Microsoft.Owin.Hosting;
 using Microsoft.Practices.Unity;
 using NLog;
 using Owin;
 using System;
+using System.Threading.Tasks;
 using System.Web.Http;
-
 using System.Web.Http.OData.Builder;
 using System.Web.Http.OData.Extensions;
 using TF.Data;
@@ -22,17 +23,10 @@ namespace TF.AggregateProductMicroservice
             /// Регистрация зависимостей
             Startup.RegisterProductDependency(config);
 
-            /// 
+            /// Регистрация маршрутов odata
             Startup.RegisterOdataRoutes(config);
 
-            /// Регистрация маршрутов
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
-
-            /// Подключаем модуль web api
+            ///// Подключаем модуль web api
             app.UseWebApi(config);
         }
 
@@ -41,7 +35,7 @@ namespace TF.AggregateProductMicroservice
             var container = new UnityContainer();
 
             container.RegisterType<IAggregateProductProductRepository, AggregateProductRepository>(new HierarchicalLifetimeManager());
-            container.RegisterType<ICategoryTreeRepository, CategoryTreeRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<ICategoryTreeRepository, CategoryTreeRepository>(new InjectionConstructor(System.Configuration.ConfigurationManager.AppSettings["CategoryTreeServiceUri"]));
             container.RegisterType<IProductsCategoryRepository, ProductsCategoryRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<ILogger, Logger>(new InjectionFactory(x => LogManager.GetCurrentClassLogger())); 
 
